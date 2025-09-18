@@ -35,7 +35,7 @@ collections:
     files:
       - name: "chapters-data"
         label: "Lista de Capítulos"
-        file: "public/data/chapters.json"
+        file: "data/chapters.json"
         fields:
           - { name: "items", label: "Capítulos", widget: "list", fields: [
               { name: "id", label: "ID", widget: "string" },
