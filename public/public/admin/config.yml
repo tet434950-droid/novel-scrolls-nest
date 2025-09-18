@@ -14,7 +14,7 @@ collections:
     files:
       - name: "novels-data"
         label: "Lista de Novels"
-        file: "data/novels.json"
+        file: "public/data/novels.json"
         fields:
           - { name: "items", label: "Novels", widget: "list", fields: [
               { name: "id", label: "ID", widget: "string" },
@@ -25,7 +25,7 @@ collections:
               { name: "cover", label: "Capa", widget: "image", required: false },
               { name: "status", label: "Status", widget: "select", options: ["ativa","pausada","concluída"], default: "ativa" },
               { name: "genres", label: "Gêneros", widget: "list", required: false }
-            ]}
+            ] }
 
   - name: "chapters"
     label: "Capítulos"
@@ -35,7 +35,7 @@ collections:
     files:
       - name: "chapters-data"
         label: "Lista de Capítulos"
-        file: "data/chapters.json"
+        file: "public/data/chapters.json"
         fields:
           - { name: "items", label: "Capítulos", widget: "list", fields: [
               { name: "id", label: "ID", widget: "string" },
@@ -47,4 +47,4 @@ collections:
               { name: "words", label: "Palavras", widget: "number", value_type: "int", required: false },
               { name: "excerpt", label: "Resumo", widget: "text", required: false },
               { name: "body", label: "Texto", widget: "markdown" }
-            ]}
+            ] }
