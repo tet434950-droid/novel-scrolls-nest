@@ -1,42 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Novel Blog Design System - Clean & Minimal */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    /* Base Colors - Clean & Readable */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 10%;
+    --surface: 0 0% 100%;
+    --surface-subtle: 0 0% 96%;
+    
+    /* Content Colors */
+    --content-primary: 0 0% 8%;
+    --content-secondary: 0 0% 35%;
+    --content-tertiary: 0 0% 55%;
+    
+    /* Border & Dividers */
+    --border-subtle: 0 0% 90%;
+    --border-default: 0 0% 85%;
+    
+    /* Interactive States */
+    --accent: 220 15% 25%;
+    --accent-hover: 220 15% 20%;
+    --accent-light: 220 15% 95%;
+    
+    /* Semantic Colors */
+    --primary: 220 15% 25%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 15%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    
+    /* UI Components */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 0 0% 8%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    --popover-foreground: 0 0% 8%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 220 15% 25%;
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* Radius & Spacing */
+    --radius: 0.75rem;
+    --content-width: 65ch;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +113,48 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  /* Reading content uses serif for better readability */
+  .prose {
+    font-family: 'Crimson Text', Georgia, serif;
+    line-height: 1.7;
+  }
+  
+  .prose h1, .prose h2, .prose h3 {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+/* Novel Blog specific components */
+  .chapter-card {
+    @apply bg-surface border border-border-subtle rounded-xl p-6 hover:shadow-md transition-all duration-200;
+  }
+  
+  .novel-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+    @apply bg-accent-light text-accent border border-border-subtle;
+  }
+  
+  .search-input {
+    @apply w-full px-4 py-3 rounded-lg border border-border-default;
+    @apply bg-surface focus:ring-2 focus:ring-accent/20 focus:border-accent;
+    @apply placeholder:text-content-tertiary transition-colors;
+  }
+  
+  /* Utility classes */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }

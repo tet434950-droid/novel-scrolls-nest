@@ -14,6 +14,25 @@ export default {
     },
     extend: {
       colors: {
+        // Novel Blog Custom Colors
+        surface: {
+          DEFAULT: "hsl(var(--surface))",
+          subtle: "hsl(var(--surface-subtle))",
+        },
+        content: {
+          primary: "hsl(var(--content-primary))",
+          secondary: "hsl(var(--content-secondary))",
+          tertiary: "hsl(var(--content-tertiary))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          hover: "hsl(var(--accent-hover))",
+          light: "hsl(var(--accent-light))",
+        },
+        "border-subtle": "hsl(var(--border-subtle))",
+        "border-default": "hsl(var(--border-default))",
+        
+        // shadcn-ui colors
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -34,10 +53,6 @@ export default {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -63,6 +78,15 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      typography: (theme: any) => ({
+        DEFAULT: {
+          css: {
+            maxWidth: 'none',
+            color: theme('colors.content.primary'),
+            lineHeight: '1.7',
+          },
+        },
+      }),
       keyframes: {
         "accordion-down": {
           from: {
