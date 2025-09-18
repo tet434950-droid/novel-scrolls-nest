@@ -14,7 +14,7 @@ collections:
     files:
       - name: "novels-data"
         label: "Lista de Novels"
-        file: "public/data/novels.json"
+        file: "data/novels.json"
         fields:
           - { name: "items", label: "Novels", widget: "list", fields: [
               { name: "id", label: "ID", widget: "string" },
