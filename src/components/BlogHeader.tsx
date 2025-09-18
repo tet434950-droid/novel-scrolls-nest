@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, Book, Home, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import ThemeToggle from './ThemeToggle';
 
 interface BlogHeaderProps {
   onSearch: (query: string) => void;
@@ -63,8 +64,8 @@ export default function BlogHeader({ onSearch }: BlogHeaderProps) {
             })}
           </nav>
 
-          {/* Search Bar */}
-          <div className="hidden md:block">
+          {/* Search Bar & Theme Toggle */}
+          <div className="hidden md:flex items-center space-x-4">
             <form onSubmit={handleSearchSubmit} className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-content-tertiary" />
               <input
@@ -75,20 +76,24 @@ export default function BlogHeader({ onSearch }: BlogHeaderProps) {
                 className="search-input pl-10 w-64"
               />
             </form>
+            <ThemeToggle />
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            type="button"
-            className="md:hidden p-2 rounded-lg text-content-secondary hover:text-content-primary hover:bg-surface-subtle"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
+          {/* Mobile controls */}
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
+            <button
+              type="button"
+              className="p-2 rounded-lg text-content-secondary hover:text-content-primary hover:bg-surface-subtle"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}

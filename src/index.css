@@ -69,41 +69,55 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Dark Mode - Optimized for reading */
+    --background: 220 13% 9%;
+    --foreground: 220 13% 91%;
+    --surface: 220 13% 11%;
+    --surface-subtle: 220 13% 13%;
+    
+    /* Content Colors for Dark Mode */
+    --content-primary: 220 13% 91%;
+    --content-secondary: 220 13% 71%;
+    --content-tertiary: 220 13% 51%;
+    
+    /* Border & Dividers for Dark Mode */
+    --border-subtle: 220 13% 20%;
+    --border-default: 220 13% 25%;
+    
+    /* Interactive States for Dark Mode */
+    --accent: 220 15% 75%;
+    --accent-hover: 220 15% 80%;
+    --accent-light: 220 15% 15%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 13% 11%;
+    --card-foreground: 220 13% 91%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 13% 11%;
+    --popover-foreground: 220 13% 91%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 220 13% 91%;
+    --primary-foreground: 220 13% 9%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 220 13% 15%;
+    --secondary-foreground: 220 13% 91%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 220 13% 15%;
+    --muted-foreground: 220 13% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 220 13% 91%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 220 13% 20%;
+    --input: 220 13% 15%;
+    --ring: 220 15% 75%;
+    --sidebar-background: 220 13% 9%;
+    --sidebar-foreground: 220 13% 91%;
+    --sidebar-primary: 220 15% 75%;
+    --sidebar-primary-foreground: 220 13% 9%;
+    --sidebar-accent: 220 13% 15%;
+    --sidebar-accent-foreground: 220 13% 91%;
+    --sidebar-border: 220 13% 20%;
+    --sidebar-ring: 220 15% 75%;
   }
 }
 
@@ -148,6 +162,38 @@
     @apply w-full px-4 py-3 rounded-lg border border-border-default;
     @apply bg-surface focus:ring-2 focus:ring-accent/20 focus:border-accent;
     @apply placeholder:text-content-tertiary transition-colors;
+  }
+  
+  /* Reading Mode Styles */
+  .reading-mode {
+    @apply max-w-3xl mx-auto;
+  }
+  
+  .reading-mode .prose {
+    @apply text-lg leading-loose;
+  }
+  
+  .reading-mode-minimal {
+    @apply bg-background min-h-screen;
+  }
+  
+  .reading-mode-minimal .chapter-content {
+    @apply bg-transparent shadow-none border-none p-0;
+  }
+  
+  /* Enhanced prose styling for better readability */
+  .prose-enhanced {
+    font-family: 'Crimson Text', Georgia, serif;
+    line-height: 1.8;
+  }
+  
+  .prose-enhanced p {
+    @apply mb-6 text-justify;
+  }
+  
+  .prose-enhanced h1, .prose-enhanced h2, .prose-enhanced h3 {
+    font-family: 'Inter', system-ui, sans-serif;
+    @apply mt-8 mb-4 font-semibold;
   }
   
   /* Utility classes */
