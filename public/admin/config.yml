@@ -1,10 +1,13 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: tet434950-droid/novel-scrolls-nest
   branch: main
+  base_url: https://auth.decapcms.org
+  auth_endpoint: /auth
 
+# backend antigo (Netlify Identity + Git Gateway):
 # backend:
-#   name: github
-#   repo: <GITHUB_USER>/<REPO_NAME>
+#   name: git-gateway
 #   branch: main
 
 media_folder: "public/uploads"

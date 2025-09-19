@@ -42,18 +42,26 @@ Um blog moderno e responsivo para publicação de novels (light novels, web nove
    - Adicione seu email e envie o convite
    - Acesse o email e complete o cadastro
 
-#### Opção 2: GitHub Backend (Alternativa)
+#### Opção 2: GitHub Backend (Não consome créditos do Netlify)
 
-1. **Editar configuração**:
-   No arquivo `public/admin/config.yml`, substitua a seção backend por:
-   ```yml
-   backend:
-     name: github
-     repo: SEU_USUARIO/SEU_REPOSITORIO
-     branch: main
-   ```
+1. **Configuração já aplicada**: O projeto já está configurado para usar GitHub como backend
 
-2. **Usar GitHub OAuth**: Faça login diretamente com sua conta GitHub
+2. **Como usar**:
+   - Deploy normalmente (Netlify, Vercel ou outro host)
+   - Acesse `/admin/` → clique em "Login with GitHub"
+   - Autorize o app `auth.decapcms.org` para fazer commits
+   - Comece a editar seu conteúdo
+
+3. **Vantagens**:
+   - Não consome créditos do Netlify Identity
+   - Login direto com GitHub (sem necessidade de convites)
+   - Commits vão direto na branch main (respeitando proteções de branch)
+
+4. **Requisitos**:
+   - Usuário deve ter permissão de **write** no repositório
+   - Conta GitHub ativa
+
+5. **Observação**: Os commits serão feitos diretamente na branch main usando sua conta GitHub
 
 ## 📝 Como adicionar conteúdo
 
