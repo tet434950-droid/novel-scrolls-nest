@@ -2,16 +2,17 @@ import { useState, useMemo } from 'react';
 import { BookOpen, Sparkles, TrendingUp } from 'lucide-react';
 import BlogHeader from '@/components/BlogHeader';
 import ChapterCard from '@/components/ChapterCard';
-import { mockChapters } from '@/data/mockData';
+import { useChapters } from '@/hooks/useContent';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const { chapters, loading, error } = useChapters();
 
   // Sort chapters by publication date (newest first)
   const sortedChapters = useMemo(() => {
-    return [...mockChapters]
+    return [...chapters]
       .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
-  }, []);
+  }, [chapters]);
 
   // Filter chapters based on search query
   const filteredChapters = useMemo(() => {
@@ -56,7 +57,7 @@ const Index = () => {
             <div className="bg-surface rounded-xl p-6 border border-border-subtle text-center">
               <BookOpen className="h-8 w-8 text-accent mx-auto mb-3" />
               <h3 className="text-2xl font-bold text-content-primary mb-1">
-                {mockChapters.length}
+                {chapters.length}
               </h3>
               <p className="text-content-secondary">Capítulos publicados</p>
             </div>
@@ -70,7 +71,7 @@ const Index = () => {
             <div className="bg-surface rounded-xl p-6 border border-border-subtle text-center">
               <TrendingUp className="h-8 w-8 text-accent mx-auto mb-3" />
               <h3 className="text-2xl font-bold text-content-primary mb-1">
-                {mockChapters.reduce((acc, ch) => acc + ch.wordCount, 0).toLocaleString()}
+                {chapters.reduce((acc, ch) => acc + ch.wordCount, 0).toLocaleString()}
               </h3>
               <p className="text-content-secondary">Palavras escritas</p>
             </div>
@@ -93,7 +94,15 @@ const Index = () => {
             )}
           </div>
 
-          {filteredChapters.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-16">
+              <p className="text-content-secondary">Carregando capítulos...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-16">
+              <p className="text-content-secondary">Erro ao carregar capítulos: {error}</p>
+            </div>
+          ) : filteredChapters.length === 0 ? (
             <div className="text-center py-16">
               <BookOpen className="h-16 w-16 text-content-tertiary mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-content-primary mb-2">

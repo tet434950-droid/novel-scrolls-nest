@@ -2,23 +2,27 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, Book, Home, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useNovels } from '@/hooks/useContent';
 import ThemeToggle from './ThemeToggle';
 
 interface BlogHeaderProps {
   onSearch: (query: string) => void;
 }
 
-const navigation = [
-  { name: 'Início', href: '/', icon: Home },
-  { name: 'Ascension Chronicles', href: '/novel/ascension-chronicles', icon: Book },
-  { name: 'Digital Realm', href: '/novel/digital-realm', icon: Book },
-  { name: 'Shattered Kingdoms', href: '/novel/shattered-kingdoms', icon: Book },
-];
-
 export default function BlogHeader({ onSearch }: BlogHeaderProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { novels } = useNovels();
+
+  const navigation = [
+    { name: 'Início', href: '/', icon: Home },
+    ...novels.map(novel => ({
+      name: novel.title,
+      href: `/novel/${novel.slug}`,
+      icon: Book
+    }))
+  ];
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();

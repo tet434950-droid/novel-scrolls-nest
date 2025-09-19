@@ -2,13 +2,25 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Book, Calendar, User, CheckCircle, Clock, Pause } from 'lucide-react';
 import ChapterCard from '@/components/ChapterCard';
-import { mockNovels, mockChapters } from '@/data/mockData';
+import { useNovels, useNovelChapters } from '@/hooks/useContent';
 
 export default function NovelPage() {
   const { slug } = useParams<{ slug: string }>();
+  const { novels, loading: novelsLoading } = useNovels();
   
-  const novel = mockNovels.find(n => n.slug === slug);
+  const novel = novels.find(n => n.slug === slug);
+  const { chapters, loading: chaptersLoading } = useNovelChapters(novel?.id || '');
   
+  if (novelsLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+          <p className="text-content-secondary">Carregando novel...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!novel) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -22,9 +34,7 @@ export default function NovelPage() {
     );
   }
 
-  const novelChapters = mockChapters
-    .filter(c => c.novelId === novel.id)
-    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  const novelChapters = chapters;
 
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat('pt-BR', {
@@ -133,7 +143,7 @@ export default function NovelPage() {
                     <div className="flex items-center space-x-3">
                       <CheckCircle className="h-5 w-5 text-content-tertiary" />
                       <span className="text-content-secondary">
-                        <strong>Capítulos:</strong> {novelChapters.length} de {novel.totalChapters}
+                        <strong>Capítulos:</strong> {novelChapters.length}
                       </span>
                     </div>
                   </div>
@@ -149,7 +159,11 @@ export default function NovelPage() {
             Capítulos ({novelChapters.length})
           </h2>
 
-          {novelChapters.length === 0 ? (
+          {chaptersLoading ? (
+            <div className="text-center py-8">
+              <p className="text-content-secondary">Carregando capítulos...</p>
+            </div>
+          ) : novelChapters.length === 0 ? (
             <div className="text-center py-16">
               <Book className="h-16 w-16 text-content-tertiary mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-content-primary mb-2">

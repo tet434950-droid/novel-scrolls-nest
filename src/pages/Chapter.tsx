@@ -5,15 +5,24 @@ import CommentSection from '@/components/CommentSection';
 import ReadingModeToggle from '@/components/ReadingModeToggle';
 import { useToast } from '@/hooks/use-toast';
 import { useReadingMode } from '@/contexts/ReadingModeContext';
-import { mockChapters } from '@/data/mockData';
+import { useChapters } from '@/hooks/useContent';
 import { cn } from '@/lib/utils';
 
 export default function Chapter() {
   const { slug } = useParams<{ slug: string }>();
   const { toast } = useToast();
   const { isReadingMode, fontSize } = useReadingMode();
+  const { chapters, loading } = useChapters();
   
-  const chapter = mockChapters.find(c => c.slug === slug);
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-content-secondary">Carregando capítulo...</p>
+      </div>
+    );
+  }
+  
+  const chapter = chapters.find(c => c.slug === slug);
   
   if (!chapter) {
     return <Navigate to="/404" replace />;
@@ -55,7 +64,7 @@ export default function Chapter() {
   };
 
   // Find previous and next chapters
-  const allChapters = mockChapters
+  const allChapters = chapters
     .filter(c => c.novelId === chapter.novelId)
     .sort((a, b) => a.chapterNumber - b.chapterNumber);
   

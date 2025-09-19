@@ -1,4 +1,99 @@
-# Welcome to your Lovable project
+# Novel Blog - Projeto Lovable
+
+Um blog moderno e responsivo para publicação de novels (light novels, web novels) com sistema de gerenciamento de conteúdo integrado usando Decap/Netlify CMS.
+
+## 📚 Funcionalidades
+
+- **Sistema de Novels**: Organize suas histórias em novels separadas
+- **Publicação de Capítulos**: Sistema completo de capítulos com navegação
+- **CMS Integrado**: Interface administrativa para gerenciar conteúdo
+- **Dark Mode**: Alternância entre modo claro e escuro
+- **Modo Leitura**: Interface minimalista focada na leitura
+- **Sistema de Comentários**: Comentários locais para cada capítulo
+- **Busca**: Sistema de busca por títulos e conteúdo
+- **Responsivo**: Design adaptado para desktop e mobile
+
+## 🔧 Configuração do CMS
+
+### Acesso ao CMS
+
+1. **Local**: Acesse `http://localhost:5173/admin/`
+2. **Produção**: Acesse `https://seusite.com/admin/`
+
+### Configuração no Netlify
+
+#### Opção 1: Netlify Identity (Recomendado)
+
+1. **Deploy no Netlify**:
+   - Conecte seu repositório GitHub ao Netlify
+   - Faça o deploy do site
+
+2. **Configurar Netlify Identity**:
+   - No painel do Netlify, vá em: `Site settings > Identity`
+   - Clique em `Enable Identity`
+   - Em `Registration preferences`, selecione `Invite only`
+   
+3. **Configurar Git Gateway**:
+   - Ainda em Identity, vá em `Services > Git Gateway`
+   - Clique em `Enable Git Gateway`
+
+4. **Criar usuário administrador**:
+   - Vá em `Identity > Invite users`
+   - Adicione seu email e envie o convite
+   - Acesse o email e complete o cadastro
+
+#### Opção 2: GitHub Backend (Alternativa)
+
+1. **Editar configuração**:
+   No arquivo `public/admin/config.yml`, substitua a seção backend por:
+   ```yml
+   backend:
+     name: github
+     repo: SEU_USUARIO/SEU_REPOSITORIO
+     branch: main
+   ```
+
+2. **Usar GitHub OAuth**: Faça login diretamente com sua conta GitHub
+
+## 📝 Como adicionar conteúdo
+
+### Adicionando uma Nova Novel
+
+1. Acesse o CMS (`/admin/`)
+2. Vá em "Novels" > "Lista de Novels"
+3. Adicione um novo item com:
+   - **ID**: Identificador único (ex: `minha-novel-1`)
+   - **Título**: Nome da novel
+   - **Slug**: URL amigável (ex: `minha-primeira-novel`)
+   - **Descrição**: Sinopse da novel
+   - **Autor**: Nome do autor
+   - **Capa**: Imagem de capa (opcional)
+   - **Status**: ativa, pausada ou concluída
+   - **Gêneros**: Lista de gêneros (opcional)
+
+### Adicionando um Capítulo
+
+1. Acesse "Capítulos" > "Lista de Capítulos"
+2. Adicione um novo item com:
+   - **ID**: Identificador único do capítulo
+   - **Novel ID**: Use o mesmo ID da novel (ex: `minha-novel-1`)
+   - **Número**: Número sequencial do capítulo
+   - **Título**: Título do capítulo
+   - **Data**: Data e hora de publicação
+   - **Texto**: Conteúdo em Markdown
+
+## 📁 Estrutura CMS
+
+```
+public/
+  admin/
+    index.html          # Interface do CMS
+    config.yml          # Configuração do CMS
+  data/
+    novels.json         # Dados das novels
+    chapters.json       # Dados dos capítulos
+  _redirects           # Configuração de rotas
+```
 
 ## Project info
 

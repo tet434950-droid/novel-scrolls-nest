@@ -1,0 +1,55 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# backend:
+#   name: github
+#   repo: <GITHUB_USER>/<REPO_NAME>
+#   branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "novels"
+    label: "Novels"
+    label_singular: "Novel"
+    editor:
+      preview: false
+    files:
+      - name: "novels-data"
+        label: "Lista de Novels"
+        file: "public/data/novels.json"
+        fields:
+          - { name: "items", label: "Novels", widget: "list", fields: [
+              { name: "id", label: "ID", widget: "string" },
+              { name: "title", label: "Título", widget: "string" },
+              { name: "slug", label: "Slug", widget: "string" },
+              { name: "description", label: "Descrição", widget: "text" },
+              { name: "author", label: "Autor", widget: "string", required: false },
+              { name: "cover", label: "Capa", widget: "image", required: false },
+              { name: "status", label: "Status", widget: "select", options: ["ativa","pausada","concluída"], default: "ativa" },
+              { name: "genres", label: "Gêneros", widget: "list", required: false }
+            ] }
+
+  - name: "chapters"
+    label: "Capítulos"
+    label_singular: "Capítulo"
+    editor:
+      preview: false
+    files:
+      - name: "chapters-data"
+        label: "Lista de Capítulos"
+        file: "public/data/chapters.json"
+        fields:
+          - { name: "items", label: "Capítulos", widget: "list", fields: [
+              { name: "id", label: "ID", widget: "string" },
+              { name: "novelId", label: "Novel ID", widget: "string", hint: "Use o mesmo ID definido na novel" },
+              { name: "number", label: "Número", widget: "number", value_type: "int" },
+              { name: "title", label: "Título", widget: "string" },
+              { name: "date", label: "Data", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ss[Z]" },
+              { name: "readingMinutes", label: "Minutos de leitura", widget: "number", value_type: "int", required: false },
+              { name: "words", label: "Palavras", widget: "number", value_type: "int", required: false },
+              { name: "excerpt", label: "Resumo", widget: "text", required: false },
+              { name: "body", label: "Texto", widget: "markdown" }
+            ] }
