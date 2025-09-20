@@ -42,26 +42,38 @@ Um blog moderno e responsivo para publicação de novels (light novels, web nove
    - Adicione seu email e envie o convite
    - Acesse o email e complete o cadastro
 
-#### Opção 2: GitHub Backend (Não consome créditos do Netlify)
+#### Opção 2: GitHub Backend com OAuth Self-Hosted (Não consome créditos do Netlify)
 
-1. **Configuração já aplicada**: O projeto já está configurado para usar GitHub como backend
+1. **Configuração OAuth no GitHub**:
+   - Acesse GitHub → Settings → Developer settings → OAuth Apps → New OAuth App
+   - **Application name**: Novel Scrolls CMS
+   - **Homepage URL**: `https://esquecidoscan.netlify.app`
+   - **Authorization callback URL**: `https://esquecidoscan.netlify.app/.netlify/functions/decap-auth/callback`
+   - Anote o **Client ID** e **Client Secret**
 
-2. **Como usar**:
-   - Deploy normalmente (Netlify, Vercel ou outro host)
+2. **Configuração no Netlify**:
+   - No painel do Netlify, vá em Site settings → Environment variables
+   - Adicione as variáveis:
+     - `GITHUB_CLIENT_ID`: [seu client ID]
+     - `GITHUB_CLIENT_SECRET`: [seu client secret]
+     - `OAUTH_REDIRECT_URI`: `https://esquecidoscan.netlify.app/.netlify/functions/decap-auth/callback`
+
+3. **Como usar**:
+   - Deploy normalmente no Netlify
    - Acesse `/admin/` → clique em "Login with GitHub"
-   - Autorize o app `auth.decapcms.org` para fazer commits
+   - Autorize o OAuth App criado
    - Comece a editar seu conteúdo
 
-3. **Vantagens**:
-   - Não consome créditos do Netlify Identity
-   - Login direto com GitHub (sem necessidade de convites)
-   - Commits vão direto na branch main (respeitando proteções de branch)
+4. **Vantagens**:
+   - **Zero créditos consumidos** do Netlify (não usa Identity)
+   - OAuth self-hosted com Netlify Functions
+   - Login direto com GitHub
+   - Commits vão direto na branch main
 
-4. **Requisitos**:
+5. **Requisitos**:
    - Usuário deve ter permissão de **write** no repositório
-   - Conta GitHub ativa
-
-5. **Observação**: Os commits serão feitos diretamente na branch main usando sua conta GitHub
+   - OAuth App configurado no GitHub
+   - Environment variables configuradas no Netlify
 
 ## 📝 Como adicionar conteúdo
 
