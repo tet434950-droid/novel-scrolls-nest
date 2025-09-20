@@ -62,56 +62,36 @@ exports.handler = async function(event, context) {
         return respond(400, `<h1>OAuth error</h1><pre>${escapeHTML(JSON.stringify(data))}</pre>`);
       }
       
-      const html = `<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>OAuth Success</title>
-</head>
-<body>
-  <h1>Authentication Successful</h1>
-  <p>You can close this window.</p>
-  
-  <script>
-    (function() {
-      const token = "${data.access_token}";
-      let success = false;
-      
-      // 1. Try postMessage to opener window
-      try {
-        if (window.opener && !window.opener.closed) {
-          window.opener.postMessage({ token: token }, "*");
-          success = true;
-          console.log("Token sent via postMessage");
-          
-          // 2. Close window if postMessage was delivered
-          setTimeout(() => {
-            try {
-              window.close();
-            } catch(e) {
-              console.log("Could not close window automatically");
-            }
-          }, 1000);
-        }
-      } catch(e) {
-        console.log("postMessage failed:", e);
+      const token = data.access_token;
+      const html = `<!doctype html><meta charset="utf-8" />
+<title>OAuth Success</title>
+<script>
+  (function () {
+    var token = ${JSON.stringify(token)};
+    var message = 'authorization:github:success:' + JSON.stringify({ token: token });
+    var sent = false;
+
+    try {
+      if (window.opener && !window.opener.closed) {
+        window.opener.postMessage(message, '*');
+        sent = true;
       }
-      
-      // 3. Fallback: redirect to /admin with token in hash
-      if (!success) {
-        setTimeout(() => {
-          try {
-            window.location.href = "/admin/#decap_token=" + encodeURIComponent(token);
-          } catch(e) {
-            // 4. Last resort: display token
-            document.body.innerHTML = '<h1>Authentication Successful</h1><p>Copy this token:</p><textarea style="width:100%;height:100px;">' + token + '</textarea>';
-          }
-        }, 2000);
-      }
-    })();
-  </script>
-</body>
-</html>`;
+    } catch (e) {}
+
+    if (sent) {
+      try { window.close(); } catch (e) {}
+      document.write('Authentication Successful. You can close this window.');
+      return;
+    }
+
+    try {
+      var target = '/admin/#decap_token=' + encodeURIComponent(token);
+      window.location.replace(target);
+    } catch (e) {
+      document.write('Token: ' + token);
+    }
+  })();
+</script>`;
       
       return respond(200, html);
     } catch (e) {
