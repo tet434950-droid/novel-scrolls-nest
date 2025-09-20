@@ -24,7 +24,7 @@ export async function handler(event, context) {
   // 1) Start OAuth → redirect to GitHub
   if (event.httpMethod === "GET" && (pathname.endsWith("/decap-auth") || pathname.endsWith("/decap-auth/"))) {
     const state = Math.random().toString(36).slice(2, 14);
-    const scope = "public_repo"; // use "repo" if repo is private
+    const scope = "repo"; // use "repo" if repo is private
     const auth = new URL("https://github.com/login/oauth/authorize");
     auth.searchParams.set("client_id", GITHUB_CLIENT_ID);
     auth.searchParams.set("redirect_uri", OAUTH_REDIRECT_URI);
