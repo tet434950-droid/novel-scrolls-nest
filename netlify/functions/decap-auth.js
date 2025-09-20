@@ -69,22 +69,36 @@ exports.handler = async function(event, context) {
   (function () {
     var token = ${JSON.stringify(token)};
     var message = 'authorization:github:success:' + JSON.stringify({ token: token });
-    var sent = false;
+    var delivered = false;
 
+    // 1) postMessage para a janela do CMS
     try {
       if (window.opener && !window.opener.closed) {
         window.opener.postMessage(message, '*');
-        sent = true;
+        // 1a) fallback adicional: injeta o token no hash da janela principal
+        try { 
+          var h = 'decap_token=' + encodeURIComponent(token);
+          if (window.opener.location) {
+            if (String(window.opener.location).indexOf('/admin') === -1) {
+              window.opener.location.href = '/admin/#' + h;
+            } else {
+              window.opener.location.hash = h;
+            }
+          }
+        } catch(e) {}
+        delivered = true;
       }
     } catch (e) {}
 
-    if (sent) {
-      try { window.close(); } catch (e) {}
+    // 2) se entregou, fecha o popup com pequeno delay
+    if (delivered) {
+      setTimeout(function(){ try { window.close(); } catch(e) {} }, 100);
       document.write('Authentication Successful. You can close this window.');
       return;
     }
 
-    try {
+    // 3) fallback final: navega o próprio popup para /admin com o token no hash
+   try {
       var target = '/admin/#decap_token=' + encodeURIComponent(token);
       window.location.replace(target);
     } catch (e) {
