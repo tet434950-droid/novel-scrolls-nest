@@ -75,17 +75,6 @@ exports.handler = async function(event, context) {
     try {
       if (window.opener && !window.opener.closed) {
         window.opener.postMessage(message, '*');
-        // 1a) fallback adicional: injeta o token no hash da janela principal
-        try { 
-          var h = 'decap_token=' + encodeURIComponent(token);
-          if (window.opener.location) {
-            if (String(window.opener.location).indexOf('/admin') === -1) {
-              window.opener.location.href = '/admin/#' + h;
-            } else {
-              window.opener.location.hash = h;
-            }
-          }
-        } catch(e) {}
         delivered = true;
       }
     } catch (e) {}
@@ -97,12 +86,14 @@ exports.handler = async function(event, context) {
       return;
     }
 
-    // 3) fallback final: navega o próprio popup para /admin com o token no hash
-   try {
-      var target = '/admin/#decap_token=' + encodeURIComponent(token);
-      window.location.replace(target);
+    // 3) fallback: navega para /admin com token no hash
+    var target1 = '/admin/#token=' + encodeURIComponent(token);
+    var target2 = '/admin/#access_token=' + encodeURIComponent(token);
+    
+    try {
+      window.location.replace(target1);
     } catch (e) {
-      document.write('Token: ' + token);
+      setTimeout(function(){ window.location.replace(target2); }, 150);
     }
   })();
 </script>`;
