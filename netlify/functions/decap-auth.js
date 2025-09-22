@@ -63,42 +63,30 @@ exports.handler = async function(event, context) {
       }
       
       const token = data.access_token;
-      const html = `<!doctype html><meta charset="utf-8" />
-<title>OAuth Success</title>
-<script>
-  (function () {
-    var token = ${JSON.stringify(token)};
-    var message = 'authorization:github:success:' + JSON.stringify({ token: token });
-    var delivered = false;
-
-    // 1) postMessage para a janela do CMS
-    try {
-      if (window.opener && !window.opener.closed) {
-        window.opener.postMessage(message, '*');
-        delivered = true;
-      }
-    } catch (e) {}
-
-    // 2) se entregou, fecha o popup com pequeno delay
-    if (delivered) {
-      setTimeout(function(){ try { window.close(); } catch(e) {} }, 100);
-      document.write('Authentication Successful. You can close this window.');
-      return;
-    }
-
-    // 3) fallback: navega para /admin com token no hash
-    var target1 = '/admin/#token=' + encodeURIComponent(token);
-    var target2 = '/admin/#access_token=' + encodeURIComponent(token);
-    
-    try {
-      window.location.replace(target1);
-    } catch (e) {
-      setTimeout(function(){ window.location.replace(target2); }, 150);
-    }
-  })();
-</script>`;
       
-      return respond(200, html);
+      return {
+        statusCode: 200,
+        headers: { "Content-Type": "text/html" },
+        body: `
+          <script>
+            (function() {
+              function receiveMessage(e) {
+                if (!e.origin.match(window.location.origin)) return;
+                window.opener.postMessage(
+                  'authorization:github:success:${JSON.stringify({ token })}',
+                  e.origin
+                );
+                window.close();
+              }
+              window.addEventListener('message', receiveMessage, false);
+              window.opener.postMessage('authorization:github:success:${JSON.stringify({ token })}', '*');
+              setTimeout(function() {
+                window.location.replace('/admin/#/'); // volta pro painel Decap
+              }, 200);
+            })();
+          </script>
+        `
+      };
     } catch (e) {
       return respond(500, `<h1>Server error</h1><pre>${escapeHTML(String(e))}</pre>`);
     }
