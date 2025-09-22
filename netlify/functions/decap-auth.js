@@ -63,6 +63,7 @@ exports.handler = async function(event, context) {
       }
       
       const token = data.access_token;
+      console.log("Token entregue ao Decap:", token);
       
       return {
         statusCode: 200,
