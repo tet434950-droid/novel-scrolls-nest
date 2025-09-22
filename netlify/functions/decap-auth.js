@@ -69,23 +69,40 @@ exports.handler = async function(event, context) {
         statusCode: 200,
         headers: { "Content-Type": "text/html" },
         body: `
-          <script>
-            (function() {
-              function receiveMessage(e) {
-                if (!e.origin.match(window.location.origin)) return;
-                window.opener.postMessage(
-                  'authorization:github:success:${JSON.stringify({ token })}',
-                  e.origin
-                );
-                window.close();
-              }
-              window.addEventListener('message', receiveMessage, false);
-              window.opener.postMessage('authorization:github:success:${JSON.stringify({ token })}', '*');
-              setTimeout(function() {
-                window.location.replace('/admin/#/'); // volta pro painel Decap
-              }, 200);
-            })();
-          </script>
+          <!doctype html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <title>Autenticação</title>
+              <style>
+                body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+                .loading { color: #333; }
+              </style>
+            </head>
+            <body>
+              <div class="loading">
+                <h2>Validando login...</h2>
+                <p>Aguarde enquanto finalizamos sua autenticação.</p>
+              </div>
+              <script>
+                (function() {
+                  function receiveMessage(e) {
+                    if (!e.origin.match(window.location.origin)) return;
+                    window.opener.postMessage(
+                      'authorization:github:success:${JSON.stringify({ token })}',
+                      e.origin
+                    );
+                    window.close();
+                  }
+                  window.addEventListener('message', receiveMessage, false);
+                  window.opener.postMessage('authorization:github:success:${JSON.stringify({ token })}', '*');
+                  setTimeout(function() {
+                    window.location.replace('/admin/#/'); // volta pro painel Decap
+                  }, 200);
+                })();
+              </script>
+            </body>
+          </html>
         `
       };
     } catch (e) {
