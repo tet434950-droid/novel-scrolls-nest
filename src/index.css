@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Novel Blog Design System - Clean & Minimal */
+/* Esquecido Scan Design System - Clean & Minimal */
 
 @layer base {
   :root {
@@ -148,7 +148,7 @@
 }
 
 @layer components {
-/* Novel Blog specific components */
+/* Esquecido Scan specific components */
   .chapter-card {
     @apply bg-surface border border-border-subtle rounded-xl p-6 hover:shadow-md transition-all duration-200;
   }

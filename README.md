@@ -1,4 +1,4 @@
-# Novel Blog - Projeto Lovable
+# Esquecido Scan - Projeto Lovable
 
 Um blog moderno e responsivo para publicação de novels (light novels, web novels) com sistema de gerenciamento de conteúdo integrado usando Decap/Netlify CMS.
 

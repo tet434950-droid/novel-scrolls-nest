@@ -41,7 +41,7 @@ const Index = () => {
             <div className="flex items-center justify-center mb-6">
               <BookOpen className="h-12 w-12 text-accent mr-4" />
               <h1 className="text-4xl md:text-5xl font-bold text-content-primary">
-                Novel Blog
+                Esquecido Scan
               </h1>
             </div>
             <p className="text-xl text-content-secondary leading-relaxed">

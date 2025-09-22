@@ -42,7 +42,7 @@ export default function BlogHeader({ onSearch }: BlogHeaderProps) {
           <Link to="/" className="flex items-center space-x-2">
             <Book className="h-8 w-8 text-accent" />
             <h1 className="text-xl font-semibold text-content-primary">
-              Novel Blog
+              Esquecido Scan
             </h1>
           </Link>
 

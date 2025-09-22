@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       colors: {
-        // Novel Blog Custom Colors
+        // Esquecido Scan Custom Colors
         surface: {
           DEFAULT: "hsl(var(--surface))",
           subtle: "hsl(var(--surface-subtle))",
