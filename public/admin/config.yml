@@ -1,8 +1,6 @@
 backend:
-  name: github
-  repo: tet434950-droid/novel-scrolls-nest
+  name: git-gateway
   branch: main
-  base_url: /.netlify/functions/decap-auth
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
