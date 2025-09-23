@@ -14,6 +14,31 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
+      - { label: "ID", name: "id", widget: "string", hint: "ID único da novel" }
       - { label: "Título", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", hint: "URL amigável (ex: minha-novel)" }
       - { label: "Descrição", name: "description", widget: "text" }
-      - { label: "Conteúdo", name: "body", widget: "markdown" }
+      - { label: "Autor", name: "author", widget: "string" }
+      - { label: "Categoria", name: "category", widget: "select", options: ["Cultivo", "LitRPG", "Fantasia", "Ação", "Romance", "Mistério"] }
+      - { label: "Status", name: "status", widget: "select", options: ["ongoing", "completed", "hiatus"] }
+      - { label: "Total de Capítulos", name: "totalChapters", widget: "number", default: 0 }
+      - { label: "Imagem de Capa", name: "coverImage", widget: "image", required: false }
+      - { label: "Data de Criação", name: "createdAt", widget: "datetime" }
+      - { label: "Última Atualização", name: "updatedAt", widget: "datetime" }
+
+  - name: "chapters"
+    label: "Capítulos"
+    folder: "data/chapters"
+    create: true
+    slug: "{{fields.novelId}}-capitulo-{{fields.chapterNumber}}"
+    fields:
+      - { label: "ID", name: "id", widget: "string", hint: "ID único do capítulo" }
+      - { label: "ID da Novel", name: "novelId", widget: "string", hint: "ID da novel a que pertence" }
+      - { label: "Título da Novel", name: "novelTitle", widget: "string", hint: "Título da novel" }
+      - { label: "Título do Capítulo", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", hint: "URL amigável do capítulo" }
+      - { label: "Número do Capítulo", name: "chapterNumber", widget: "number" }
+      - { label: "Conteúdo", name: "content", widget: "markdown" }
+      - { label: "Data de Publicação", name: "publishedAt", widget: "datetime" }
+      - { label: "Contagem de Palavras", name: "wordCount", widget: "number", default: 0 }
+      - { label: "Publicado", name: "isPublished", widget: "boolean", default: true }
