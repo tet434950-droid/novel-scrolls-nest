@@ -2,11 +2,13 @@ import { useState, useMemo } from 'react';
 import { BookOpen, Sparkles, TrendingUp } from 'lucide-react';
 import BlogHeader from '@/components/BlogHeader';
 import ChapterCard from '@/components/ChapterCard';
-import { useChapters } from '@/hooks/useContent';
+import NovelCard from '@/components/NovelCard';
+import { useChapters, useNovels } from '@/hooks/useContent';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { chapters, loading, error } = useChapters();
+  const { novels, loading: novelsLoading } = useNovels();
 
   // Sort chapters by publication date (newest first)
   const sortedChapters = useMemo(() => {
@@ -64,7 +66,7 @@ const Index = () => {
             
             <div className="bg-surface rounded-xl p-6 border border-border-subtle text-center">
               <Sparkles className="h-8 w-8 text-accent mx-auto mb-3" />
-              <h3 className="text-2xl font-bold text-content-primary mb-1">3</h3>
+              <h3 className="text-2xl font-bold text-content-primary mb-1">{novels.length}</h3>
               <p className="text-content-secondary">Novels ativas</p>
             </div>
             
@@ -76,6 +78,37 @@ const Index = () => {
               <p className="text-content-secondary">Palavras escritas</p>
             </div>
           </div>
+        </section>
+
+        {/* Novels Section */}
+        <section className="mb-16">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl font-bold text-content-primary">
+              Novels Disponíveis
+            </h2>
+          </div>
+
+          {novelsLoading ? (
+            <div className="text-center py-8">
+              <p className="text-content-secondary">Carregando novels...</p>
+            </div>
+          ) : novels.length === 0 ? (
+            <div className="text-center py-8">
+              <BookOpen className="h-12 w-12 text-content-tertiary mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-content-primary mb-2">
+                Nenhuma novel ainda
+              </h3>
+              <p className="text-content-secondary">
+                As novels aparecerão aqui assim que forem adicionadas.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {novels.map((novel) => (
+                <NovelCard key={novel.id} novel={novel} />
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Chapters Section */}
