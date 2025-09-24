@@ -1,7 +1,40 @@
 [
   {
+    "id": "saqueador-do-apocalipse",
+    "title": "Saqueador do Apocalipse",
+    "slug": "saqueador-do-apocalipse",
+    "description": "Em um mundo devastado pelo apocalipse, um jovem saqueador luta pela sobrevivência em meio ao caos e à destruição. Entre ruínas e perigos constantes, ele deve enfrentar não apenas as ameaças externas, mas também os demônios internos que o assombram.",
+    "coverImage": "/covers/saqueador-do-apocalipse.png",
+    "author": "Autor Desconhecido",
+    "category": "Apocalíptico",
+    "status": "ongoing",
+    "totalChapters": 5,
+    "createdAt": "2024-01-15T00:00:00.000Z",
+    "updatedAt": "2024-01-20T00:00:00.000Z"
+  },
+  {
+    "id": "entre-arvores-primavera",
+    "title": "Entre Árvores de Primavera e Nuvens ao Crepúsculo",
+    "slug": "entre-arvores-primavera",
+    "description": "Uma história poética sobre a jornada de autodescoberta de um jovem cultivador em um mundo de artes marciais orientais. Entre paisagens serenas e ensinamentos ancestrais, ele busca o equilíbrio entre a natureza e o caminho da cultivação.",
+    "coverImage": "/covers/entre-arvores-primavera.png",
+    "author": "Mu Liang",
+    "category": "Xianxia",
+    "status": "ongoing",
+    "totalChapters": 3,
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "updatedAt": "2024-01-18T00:00:00.000Z"
+  },
+  {
+    "id": "exemplo-de-novel",
     "title": "Exemplo de Novel",
-    "description": "Primeiro teste de capítulo",
-    "body": "Aqui vai o conteúdo da história..."
+    "slug": "exemplo-de-novel",
+    "description": "Uma novel de exemplo para demonstrar o sistema.",
+    "author": "Autor Exemplo",
+    "category": "Fantasia",
+    "status": "ongoing",
+    "totalChapters": 1,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
   }
 ]
