@@ -88,10 +88,20 @@ export default function NovelPage() {
         <header className="mb-12">
           <div className="bg-surface rounded-2xl p-8 md:p-12 border border-border-subtle">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Novel Cover (placeholder) */}
+              {/* Novel Cover */}
               <div className="lg:col-span-1">
-                <div className="aspect-[3/4] bg-accent-light rounded-xl flex items-center justify-center">
-                  <Book className="h-16 w-16 text-accent" />
+                <div className="aspect-[3/4] bg-gradient-to-br from-accent/20 to-accent/5 rounded-xl overflow-hidden">
+                  {novel.coverImage ? (
+                    <img 
+                      src={novel.coverImage} 
+                      alt={`Capa de ${novel.title}`}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <Book className="h-16 w-16 text-accent/60" />
+                    </div>
+                  )}
                 </div>
               </div>
 
