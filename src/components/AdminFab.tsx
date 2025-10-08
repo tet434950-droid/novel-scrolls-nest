@@ -1,6 +1,14 @@
 import { Settings } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 export function AdminFab() {
+  const location = useLocation();
+  
+  // Hide FAB on admin routes
+  if (location.pathname.startsWith('/admin') || location.pathname === '/auth') {
+    return null;
+  }
+  
   return (
     <a
       href="/admin/"

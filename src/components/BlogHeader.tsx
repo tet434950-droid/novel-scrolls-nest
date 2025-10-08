@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Book, Home, Menu, X } from 'lucide-react';
+import { Search, Book, Home, Menu, X, LogIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useNovels } from '@/hooks/useContent';
+import { Button } from '@/components/ui/button';
 import ThemeToggle from './ThemeToggle';
 
 interface BlogHeaderProps {
@@ -81,6 +82,12 @@ export default function BlogHeader({ onSearch }: BlogHeaderProps) {
               />
             </form>
             <ThemeToggle />
+            <Link to="/auth">
+              <Button variant="outline" size="sm">
+                <LogIn className="h-4 w-4 mr-2" />
+                Admin
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile controls */}
