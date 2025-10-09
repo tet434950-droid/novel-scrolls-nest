@@ -10,6 +10,9 @@ import { ProtectedRoute } from "@/components/admin/ProtectedRoute";
 import Index from "./pages/Index";
 import Chapter from "./pages/Chapter";
 import NovelPage from "./pages/NovelPage";
+import Obras from "./pages/Obras";
+import ObraDetalhes from "./pages/ObraDetalhes";
+import CapituloLeitura from "./pages/CapituloLeitura";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/admin/Dashboard";
@@ -32,6 +35,9 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/chapter/:slug" element={<Chapter />} />
               <Route path="/novel/:slug" element={<NovelPage />} />
+              <Route path="/obras" element={<Obras />} />
+              <Route path="/obras/:slug" element={<ObraDetalhes />} />
+              <Route path="/obras/:slug/:chapterSlug" element={<CapituloLeitura />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/admin/novels" element={<ProtectedRoute><NovelsManage /></ProtectedRoute>} />

@@ -19,6 +19,7 @@ export type Database = {
           chapter_number: number
           content: string
           created_at: string
+          display_order: number | null
           id: string
           is_published: boolean | null
           novel_id: string
@@ -26,6 +27,7 @@ export type Database = {
           publish_at: string | null
           slug: string
           status: Database["public"]["Enums"]["chapter_status"] | null
+          subtitle: string | null
           title: string
           updated_at: string
           word_count: number | null
@@ -34,6 +36,7 @@ export type Database = {
           chapter_number: number
           content: string
           created_at?: string
+          display_order?: number | null
           id?: string
           is_published?: boolean | null
           novel_id: string
@@ -41,6 +44,7 @@ export type Database = {
           publish_at?: string | null
           slug: string
           status?: Database["public"]["Enums"]["chapter_status"] | null
+          subtitle?: string | null
           title: string
           updated_at?: string
           word_count?: number | null
@@ -49,6 +53,7 @@ export type Database = {
           chapter_number?: number
           content?: string
           created_at?: string
+          display_order?: number | null
           id?: string
           is_published?: boolean | null
           novel_id?: string
@@ -56,6 +61,7 @@ export type Database = {
           publish_at?: string | null
           slug?: string
           status?: Database["public"]["Enums"]["chapter_status"] | null
+          subtitle?: string | null
           title?: string
           updated_at?: string
           word_count?: number | null
@@ -77,9 +83,12 @@ export type Database = {
           cover_image: string | null
           created_at: string
           description: string | null
+          genre: string | null
           id: string
           slug: string
           status: Database["public"]["Enums"]["novel_status"] | null
+          synopsis: string | null
+          tags: string | null
           title: string
           total_chapters: number | null
           updated_at: string
@@ -90,9 +99,12 @@ export type Database = {
           cover_image?: string | null
           created_at?: string
           description?: string | null
+          genre?: string | null
           id?: string
           slug: string
           status?: Database["public"]["Enums"]["novel_status"] | null
+          synopsis?: string | null
+          tags?: string | null
           title: string
           total_chapters?: number | null
           updated_at?: string
@@ -103,9 +115,12 @@ export type Database = {
           cover_image?: string | null
           created_at?: string
           description?: string | null
+          genre?: string | null
           id?: string
           slug?: string
           status?: Database["public"]["Enums"]["novel_status"] | null
+          synopsis?: string | null
+          tags?: string | null
           title?: string
           total_chapters?: number | null
           updated_at?: string

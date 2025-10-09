@@ -114,12 +114,12 @@ export default function NovelsManage() {
                 <ArrowLeft className="h-5 w-5" />
               </Button>
             </Link>
-            <h1 className="text-2xl font-bold">Gerenciar Novels</h1>
+            <h1 className="text-2xl font-bold">Gerenciar Obras</h1>
           </div>
           <Link to="/admin/novels/new">
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Nova Novel
+              Nova Obra
             </Button>
           </Link>
         </div>
@@ -157,7 +157,7 @@ export default function NovelsManage() {
                 {filteredNovels.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                      Nenhuma novel encontrada
+                      Nenhuma obra encontrada
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -207,7 +207,7 @@ export default function NovelsManage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
             <AlertDialogDescription>
-              Tem certeza que deseja excluir esta novel? Esta ação não pode ser desfeita e
+              Tem certeza que deseja excluir esta obra? Esta ação não pode ser desfeita e
               todos os capítulos associados também serão excluídos.
             </AlertDialogDescription>
           </AlertDialogHeader>

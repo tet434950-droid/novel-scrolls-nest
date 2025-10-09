@@ -60,7 +60,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total de Novels</CardTitle>
+              <CardTitle className="text-sm font-medium">Total de Obras</CardTitle>
               <Book className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -90,7 +90,7 @@ export default function Dashboard() {
               <FilePlus className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.draftChapters}</div>
+              <div className="text-2xl font-bold text-yellow-500">{stats.draftChapters}</div>
               <p className="text-xs text-muted-foreground">
                 Capítulos não publicados
               </p>
@@ -103,7 +103,7 @@ export default function Dashboard() {
               <BookOpen className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.publishedChapters}</div>
+              <div className="text-2xl font-bold text-green-500">{stats.publishedChapters}</div>
               <p className="text-xs text-muted-foreground">
                 Capítulos ao vivo
               </p>
@@ -114,16 +114,16 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Gerenciar Novels</CardTitle>
+              <CardTitle>Gerenciar Obras</CardTitle>
               <CardDescription>
-                Criar, editar e excluir novels
+                Criar, editar e excluir obras
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Link to="/admin/novels">
                 <Button className="w-full">
                   <Book className="mr-2 h-4 w-4" />
-                  Ver Novels
+                  Ver Obras
                 </Button>
               </Link>
             </CardContent>
@@ -131,18 +131,13 @@ export default function Dashboard() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Gerenciar Capítulos</CardTitle>
+              <CardTitle>Últimas Atualizações</CardTitle>
               <CardDescription>
-                Criar, editar e excluir capítulos
+                Obras recentemente modificadas
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Link to="/admin/novels">
-                <Button className="w-full">
-                  <FileText className="mr-2 h-4 w-4" />
-                  Ver Capítulos
-                </Button>
-              </Link>
+              <p className="text-sm text-muted-foreground">Em breve...</p>
             </CardContent>
           </Card>
         </div>

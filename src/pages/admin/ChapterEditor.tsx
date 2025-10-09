@@ -22,6 +22,7 @@ export default function ChapterEditor() {
   const [nextChapterNumber, setNextChapterNumber] = useState(1);
   const [formData, setFormData] = useState({
     title: '',
+    subtitle: '',
     slug: '',
     chapter_number: 1,
     content: '',
@@ -210,7 +211,7 @@ export default function ChapterEditor() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="status">Status *</Label>
+                  <Label htmlFor="status">Status da Publicação *</Label>
                   <Select
                     value={formData.status}
                     onValueChange={(value: 'draft' | 'published') =>
@@ -239,7 +240,17 @@ export default function ChapterEditor() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="slug">Slug *</Label>
+                <Label htmlFor="subtitle">Subtítulo</Label>
+                <Input
+                  id="subtitle"
+                  value={formData.subtitle}
+                  onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
+                  placeholder="Subtítulo opcional"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="slug">Identificador *</Label>
                 <Input
                   id="slug"
                   value={formData.slug}
@@ -249,19 +260,22 @@ export default function ChapterEditor() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="publish_at">Agendamento (opcional)</Label>
+                <Label htmlFor="publish_at">Agendar Publicação (opcional)</Label>
                 <Input
                   id="publish_at"
                   type="datetime-local"
                   value={formData.publish_at || ''}
                   onChange={(e) => setFormData({ ...formData, publish_at: e.target.value || null })}
                 />
+                <p className="text-sm text-muted-foreground">
+                  Deixe vazio para publicar imediatamente
+                </p>
               </div>
 
               <Tabs defaultValue="editor" className="w-full">
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="editor">Editor</TabsTrigger>
-                  <TabsTrigger value="preview">Preview</TabsTrigger>
+                  <TabsTrigger value="preview">Prévia</TabsTrigger>
                 </TabsList>
                 <TabsContent value="editor" className="space-y-2">
                   <Label htmlFor="content">Conteúdo (Markdown) *</Label>
@@ -273,9 +287,10 @@ export default function ChapterEditor() {
                     className="font-mono"
                     required
                   />
-                  <p className="text-sm text-muted-foreground">
-                    Palavras: {formData.content.trim().split(/\s+/).filter(w => w).length}
-                  </p>
+                  <div className="flex justify-between items-center text-sm text-muted-foreground">
+                    <span>Palavras: {formData.content.trim().split(/\s+/).filter(w => w).length}</span>
+                    <span className="text-xs">Salvamento automático ativo</span>
+                  </div>
                 </TabsContent>
                 <TabsContent value="preview" className="space-y-2">
                   <div className="prose prose-sm dark:prose-invert max-w-none p-4 border rounded-lg min-h-[500px]">
@@ -288,9 +303,17 @@ export default function ChapterEditor() {
                 <Button type="submit" disabled={loading}>
                   {loading ? 'Salvando...' : isEdit ? 'Atualizar' : 'Criar'}
                 </Button>
+                <Button 
+                  type="button" 
+                  variant="outline"
+                  onClick={() => saveChapter(false)}
+                  disabled={loading}
+                >
+                  Salvar Rascunho
+                </Button>
                 <Link to={`/admin/novels/${novelId}/chapters`}>
                   <Button type="button" variant="outline">
-                    Cancelar
+                    Voltar
                   </Button>
                 </Link>
               </div>

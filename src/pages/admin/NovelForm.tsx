@@ -26,6 +26,9 @@ export default function NovelForm() {
     description: '',
     author: '',
     category: '',
+    genre: '',
+    synopsis: '',
+    tags: '',
     status: 'draft' as 'draft' | 'published',
     cover_image: ''
   });
@@ -158,7 +161,7 @@ export default function NovelForm() {
             </Button>
           </Link>
           <h1 className="text-2xl font-bold">
-            {isEdit ? 'Editar Novel' : 'Nova Novel'}
+            {isEdit ? 'Editar Obra' : 'Nova Obra'}
           </h1>
         </div>
       </header>
@@ -166,7 +169,7 @@ export default function NovelForm() {
       <main className="container mx-auto px-4 py-8 max-w-2xl">
         <Card>
           <CardHeader>
-            <CardTitle>{isEdit ? 'Editar Novel' : 'Criar Nova Novel'}</CardTitle>
+            <CardTitle>{isEdit ? 'Editar Obra' : 'Criar Nova Obra'}</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -181,7 +184,7 @@ export default function NovelForm() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="slug">Slug *</Label>
+                <Label htmlFor="slug">Identificador *</Label>
                 <Input
                   id="slug"
                   value={formData.slug}
@@ -194,12 +197,24 @@ export default function NovelForm() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">Descrição</Label>
+                <Label htmlFor="description">Descrição Curta</Label>
                 <Textarea
                   id="description"
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  rows={4}
+                  rows={3}
+                  placeholder="Breve descrição para listagens"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="synopsis">Sinopse Completa</Label>
+                <Textarea
+                  id="synopsis"
+                  value={formData.synopsis}
+                  onChange={(e) => setFormData({ ...formData, synopsis: e.target.value })}
+                  rows={6}
+                  placeholder="Sinopse detalhada da obra"
                 />
               </div>
 
@@ -213,27 +228,52 @@ export default function NovelForm() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="category">Categoria *</Label>
-                <Select
-                  value={formData.category}
-                  onValueChange={(value) => setFormData({ ...formData, category: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione uma categoria" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CATEGORIES.map((cat) => (
-                      <SelectItem key={cat} value={cat}>
-                        {cat}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="category">Categoria *</Label>
+                  <Select
+                    value={formData.category}
+                    onValueChange={(value) => setFormData({ ...formData, category: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione uma categoria" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {CATEGORIES.map((cat) => (
+                        <SelectItem key={cat} value={cat}>
+                          {cat}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="genre">Gênero</Label>
+                  <Input
+                    id="genre"
+                    value={formData.genre}
+                    onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
+                    placeholder="Ex: Fantasia, Ação, Romance"
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="status">Status *</Label>
+                <Label htmlFor="tags">Tags</Label>
+                <Input
+                  id="tags"
+                  value={formData.tags}
+                  onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                  placeholder="Palavras-chave separadas por vírgula"
+                />
+                <p className="text-sm text-muted-foreground">
+                  Ex: cultivo, sistema, reencarnação
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="status">Status da Publicação *</Label>
                 <Select
                   value={formData.status}
                   onValueChange={(value: 'draft' | 'published') =>
@@ -245,7 +285,7 @@ export default function NovelForm() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="draft">Rascunho</SelectItem>
-                    <SelectItem value="published">Publicada</SelectItem>
+                    <SelectItem value="published">Publicado</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
