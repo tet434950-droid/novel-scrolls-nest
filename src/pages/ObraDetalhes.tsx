@@ -67,7 +67,7 @@ export default function ObraDetalhes() {
       .eq('novel_id', novelData.id)
       .eq('status', 'published')
       .eq('is_published', true)
-      .lte('publish_at', new Date().toISOString())
+      .or(`publish_at.is.null,publish_at.lte.${new Date().toISOString()}`)
       .order('chapter_number', { ascending: true });
 
     if (chaptersError) {

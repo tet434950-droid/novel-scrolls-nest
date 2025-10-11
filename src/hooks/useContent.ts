@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import type { Novel, Chapter } from '@/types/novel';
 
 export const useNovels = () => {
@@ -9,50 +10,34 @@ export const useNovels = () => {
   useEffect(() => {
     const fetchNovels = async () => {
       try {
-        // Primeiro tenta buscar do arquivo JSON existente
-        try {
-          const response = await fetch('/data/novels.json?' + Date.now());
-          if (response.ok) {
-            const data = await response.json();
-            const transformedNovels = Array.isArray(data) ? data.map((item: any) => ({
-              ...item,
-              id: item.id || `novel-${Date.now()}`,
-              slug: item.slug || item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-              createdAt: new Date(item.createdAt || Date.now()),
-              updatedAt: new Date(item.updatedAt || Date.now()),
-            })) : data.items?.map((item: any) => ({
-              ...item,
-              id: item.id || `novel-${Date.now()}`,
-              slug: item.slug || item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-              createdAt: new Date(item.createdAt || Date.now()),
-              updatedAt: new Date(item.updatedAt || Date.now()),
-            })) || [];
-            
-            setNovels(transformedNovels);
-            return;
-          }
-        } catch (jsonError) {
-          console.log('JSON file not found, checking for individual files...');
-        }
+        const { data, error: supabaseError } = await supabase
+          .from('novels')
+          .select('*')
+          .eq('status', 'published')
+          .order('updated_at', { ascending: false });
 
-        // Se não encontrar o JSON, cria dados de exemplo
-        const exampleNovels: Novel[] = [
-          {
-            id: 'novel-1',
-            title: 'Exemplo de Novel',
-            slug: 'exemplo-de-novel',
-            description: 'Uma novel de exemplo para demonstrar o sistema.',
-            author: 'Autor Exemplo',
-            category: 'Fantasia',
-            status: 'ongoing' as const,
-            totalChapters: 1,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          }
-        ];
-        
-        setNovels(exampleNovels);
+        if (supabaseError) throw supabaseError;
+
+        const transformedNovels: Novel[] = (data || []).map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          slug: item.slug,
+          description: item.description || item.synopsis || '',
+          coverImage: item.cover_image,
+          author: item.author,
+          category: item.category,
+          genre: item.genre,
+          synopsis: item.synopsis,
+          tags: item.tags,
+          status: item.status === 'published' ? 'ongoing' : 'completed',
+          totalChapters: item.total_chapters || 0,
+          createdAt: new Date(item.created_at),
+          updatedAt: new Date(item.updated_at),
+        }));
+
+        setNovels(transformedNovels);
       } catch (err) {
+        console.error('Error fetching novels:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
         setLoading(false);
@@ -73,60 +58,33 @@ export const useChapters = () => {
   useEffect(() => {
     const fetchChapters = async () => {
       try {
-        // Primeiro tenta buscar do arquivo JSON existente
-        try {
-          const response = await fetch('/data/chapters.json?' + Date.now());
-          if (response.ok) {
-            const data = await response.json();
-            const transformedChapters = Array.isArray(data) ? data.map((item: any) => ({
-              id: item.id || `chapter-${Date.now()}`,
-              novelId: item.novelId || 'novel-1',
-              novelTitle: item.novelTitle || 'Exemplo de Novel',
-              title: item.title,
-              slug: item.slug || item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-              chapterNumber: item.chapterNumber || item.number || 1,
-              content: item.content || item.body || '',
-              publishedAt: new Date(item.publishedAt || item.date || Date.now()),
-              wordCount: item.wordCount || item.words || 0,
-              isPublished: item.isPublished !== undefined ? item.isPublished : true,
-            })) : data.items?.map((item: any) => ({
-              id: item.id || `chapter-${Date.now()}`,
-              novelId: item.novelId || 'novel-1',
-              novelTitle: item.novelTitle || 'Exemplo de Novel',
-              title: item.title,
-              slug: item.slug || item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-              chapterNumber: item.chapterNumber || item.number || 1,
-              content: item.content || item.body || '',
-              publishedAt: new Date(item.publishedAt || item.date || Date.now()),
-              wordCount: item.wordCount || item.words || 0,
-              isPublished: item.isPublished !== undefined ? item.isPublished : true,
-            })) || [];
-            
-            setChapters(transformedChapters);
-            return;
-          }
-        } catch (jsonError) {
-          console.log('Chapters JSON file not found, checking for individual files...');
-        }
+        const { data, error: supabaseError } = await supabase
+          .from('chapters')
+          .select('*')
+          .eq('status', 'published')
+          .eq('is_published', true)
+          .or(`publish_at.is.null,publish_at.lte.${new Date().toISOString()}`)
+          .order('created_at', { ascending: false });
 
-        // Se não encontrar o JSON, cria dados de exemplo
-        const exampleChapters: Chapter[] = [
-          {
-            id: 'chapter-1',
-            novelId: 'novel-1',
-            novelTitle: 'Exemplo de Novel',
-            title: 'Capítulo 1: O Início',
-            slug: 'capitulo-1-o-inicio',
-            chapterNumber: 1,
-            content: 'Este é um capítulo de exemplo para demonstrar o sistema de gerenciamento de capítulos. Aqui você pode escrever todo o conteúdo da sua história...',
-            publishedAt: new Date(),
-            wordCount: 150,
-            isPublished: true,
-          }
-        ];
-        
-        setChapters(exampleChapters);
+        if (supabaseError) throw supabaseError;
+
+        const transformedChapters: Chapter[] = (data || []).map((item: any) => ({
+          id: item.id,
+          novelId: item.novel_id,
+          novelTitle: item.novel_title,
+          title: item.title,
+          subtitle: item.subtitle,
+          slug: item.slug,
+          chapterNumber: item.chapter_number,
+          content: item.content,
+          publishedAt: new Date(item.publish_at || item.created_at),
+          wordCount: item.word_count || 0,
+          isPublished: item.is_published,
+        }));
+
+        setChapters(transformedChapters);
       } catch (err) {
+        console.error('Error fetching chapters:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
         setLoading(false);
